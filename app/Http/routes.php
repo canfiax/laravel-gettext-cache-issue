@@ -27,8 +27,9 @@
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/{lang?}', function ($lang = null) {
 
-		if($lang)
+		if($lang) {
 			LaravelGettext::setLocale($lang);
+		}
 
 	    return view('welcome');
 	});
