@@ -1,27 +1,24 @@
-# Laravel PHP Framework
+# Repo created related to strange caching issues using gettext & nginx
+This package: https://github.com/xinax/laravel-gettext
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Theese issues:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+ - https://github.com/xinax/laravel-gettext/issues/61
+ - https://github.com/xinax/laravel-gettext/issues/20
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+# How to install this repo to reproduce the error
 
-## Official Documentation
+ - cd into your projects folder
+ - git clone https://github.com/canfiax/laravel-gettext-cache-issue
+ - edit your homestead.yaml file (running `homestead edit` should bring this up) to point 'test.app' to laravel-gettext-cache-issue folder
+ - edit your hosts file to point test.app to your homestead server (on osx you can write `sudo nano /etc/hosts` and add this line: `192.168.10.10 test.app`)
+ - run `homestead halt && homestead up --provision` to add provision the test.app project
+ - run `homestead ssh` and cd into the `laravel-gettext-cache-issue` folder.
+ - run `composer install`
+ - You should now be able to see the welcome screen of `http://test.app`
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+# How to reproduce the error
+ - Navigate to `http://test.app/`. The content should be in english and say "Laravel 5"
+ - Now click Danish below the header. You should now be navigated to `http://test.app/da_DK` and the header should say `Laravel 5 på dansk'. Hurray! Gettext seems to be working
+ - Now refresh the page, using CMR+R on OSX or F5 on Windows. The string is back to english. What happend?
+ - If you switch back to english, and then click danish again, the correct translation will show up.

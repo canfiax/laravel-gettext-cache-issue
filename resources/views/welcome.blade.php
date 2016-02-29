@@ -39,6 +39,9 @@
         <div class="container">
             <div class="content">
                 <div class="title">{{ _('Laravel 5') }}</div>
+                <a href="/en_US">English</a>&nbsp;<a href="/da_DK">Danish</a>
+                <br /><br />
+                Current locale: {{ LaravelGettext::getLocale() }}
             </div>
         </div>
     </body>
